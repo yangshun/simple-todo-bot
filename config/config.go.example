@@ -1,0 +1,11 @@
+package config
+
+const (
+  TelegramBotAPI = "https://api.telegram.org/bot"
+  TelegramBotToken = ""
+  TelegramBotUrl = TelegramBotAPI + TelegramBotToken
+
+  DatabaseName = "todos"
+  DatabaseUser = ""
+  DatabaseHost = ""
+)
