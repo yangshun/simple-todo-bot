@@ -2,7 +2,7 @@
 
 A telegram bot that manages your todos:
 
-![Example](screenshots/example.png)
+<img src="screenshots/example.png" alt="Screenshot" width="75%"/>
 
 ### Set up:
 
