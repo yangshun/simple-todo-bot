@@ -1,5 +1,9 @@
 # Simple Todo Bot
 
+A telegram bot that manages your todos:
+
+![Example](screenshots/example.png)
+
 Set up:
 
 1. Create a Postgres database and run `todos.sql`.
