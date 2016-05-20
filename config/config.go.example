@@ -7,5 +7,6 @@ const (
 
   DatabaseName = "todos"
   DatabaseUser = ""
+  DatabasePassword = ""
   DatabaseHost = ""
 )

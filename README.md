@@ -4,7 +4,7 @@ A telegram bot that manages your todos:
 
 ![Example](screenshots/example.png)
 
-Set up:
+### Set up:
 
 1. Create a Postgres database and run `todos.sql`.
 2. Copy `config.go.example` as `config.go` and replace the respective values in `config.go`.

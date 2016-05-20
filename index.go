@@ -19,7 +19,10 @@ var db *sql.DB
 
 func init() {
   var err error
-  db, err = sql.Open("postgres", "postgres://" + config.DatabaseUser + ":@" + config.DatabaseHost + "/" + config.DatabaseName + "?sslmode=disable")
+  db, err = sql.Open("postgres", "postgres://" + config.DatabaseUser + ":" +
+                                                  config.DatabasePassword + "@" +
+                                                  config.DatabaseHost + "/" +
+                                                  config.DatabaseName + "?sslmode=disable")
   if err != nil {
     log.Fatal(err)
   }
