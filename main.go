@@ -61,9 +61,8 @@ type GetUpdates struct {
 
 func getUpdates(body []byte) *GetUpdates {
 	var s = new(GetUpdates)
-	err := json.Unmarshal(body, &s)
-	if err != nil {
-		fmt.Printf("%s", err)
+	if err := json.Unmarshal(body, &s); err != nil {
+		fmt.Println("%s", err)
 	}
 	return s
 }
@@ -78,12 +77,12 @@ func main() {
 		getUpdatesUrl := config.TelegramBotUrl + "/getUpdates?offset=" + strconv.Itoa(lastOffset+1)
 		response, err := http.Get(getUpdatesUrl)
 		if err != nil {
-			fmt.Printf("%s", err)
+			fmt.Println("%s", err)
 		} else {
 			defer response.Body.Close()
 			body, err := ioutil.ReadAll(response.Body)
 			if err != nil {
-				fmt.Printf("%s", err)
+				fmt.Println("%s", err)
 			}
 
 			getUpdatesData := getUpdates([]byte(body))
@@ -119,7 +118,7 @@ func processUpdate(update Update) {
 	case "/list":
 		rows, err := db.Query("SELECT * FROM tasks WHERE complete = 0")
 		if err != nil {
-			fmt.Printf("%s", err)
+			fmt.Println("%s", err)
 			return
 		}
 		defer rows.Close()
@@ -140,7 +139,7 @@ func processUpdate(update Update) {
 		}
 		message := ""
 		for _, todo := range todos {
-			message += "(" + strconv.Itoa(todo.id) + ") - " + todo.task + "\n"
+			message += fmt.Sprintf("*%d*. %s\n", todo.id, todo.task)
 		}
 
 		sendMessage(chatId, message)
@@ -158,20 +157,20 @@ func processUpdate(update Update) {
 			sendMessage(chatId, "Error: Invalid input")
 			return
 		}
-		sendMessage(chatId, "Task added successfully!")
+		sendMessage(chatId, fmt.Sprintf("Added task: %s", task))
 	case "/complete":
-		taskId := messageSegments[1]
-		if taskId == "" {
-			sendMessage(chatId, "Error: No task id selected")
-			return
-		}
+    if len(messageSegments) <= 1 {
+      sendMessage(chatId, "Error: No task id selected")
+      return
+    }
 
+		taskId := messageSegments[1]
 		_, err := db.Exec("UPDATE tasks SET complete=1 WHERE id = $1", taskId)
 		if err != nil {
 			sendMessage(chatId, "Error: Invalid input")
 			return
 		}
-		sendMessage(chatId, "Task completed successfully!")
+		sendMessage(chatId, fmt.Sprintf("Task %s marked as complete!", taskId))
 	default:
 		return
 	}
