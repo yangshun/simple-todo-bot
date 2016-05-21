@@ -12,7 +12,7 @@ A telegram bot that manages your todos:
   $ cp config/config.go.example config/config.go
   ```
 
-3. Run the go program:
+3. Running the program.
   ```
-  $ go build index.go && ./index
+  $ go run main.go
   ```
